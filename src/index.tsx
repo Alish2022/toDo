@@ -4,9 +4,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createTheme, ThemeProvider} from "@mui/material";
-import {blue, green, grey, lightBlue, lightGreen, red, yellow} from "@mui/material/colors";
-import {dark, light} from "@mui/material/styles/createPalette";
+import {blue, green} from "@mui/material/colors";
 import CssBaseline from '@mui/material/CssBaseline';
+import {Provider} from "react-redux";
+import {store} from "./state/store";
 
 const theme=createTheme({
     palette:{
@@ -17,11 +18,12 @@ const theme=createTheme({
 })
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <App />
-    </ThemeProvider>
-
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <App />
+        </ThemeProvider>
+    </Provider>
     ,  document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

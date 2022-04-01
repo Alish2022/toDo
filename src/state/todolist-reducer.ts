@@ -1,5 +1,6 @@
 import {FilterValuesType, TodolistType} from "../App";
 import {v1} from "uuid";
+import {todolistId1, todolistId2} from "./task-reducer";
 
 export type RemoveActionType = {
     type: "REMOVE-TODOLIST",
@@ -57,7 +58,12 @@ export const changeFilterAC = (todolistId:string,filter: FilterValuesType): Chan
 
 type ActionType = RemoveActionType | ChangeTodolistTitleActionType|AddTodolistActionType|ChangeFilterActionType
 
-export const todolistReducer = (state: Array<TodolistType>, action: ActionType):Array<TodolistType>=> {
+const initialState:Array<TodolistType>=[
+    {id: todolistId1, title: "What to learn", filter: "all"},
+    {id: todolistId2, title: "What to buy", filter: "all"}
+]
+
+export const todolistReducer = (state: Array<TodolistType>=initialState, action: ActionType):Array<TodolistType>=> {
     switch (action.type) {
         case "REMOVE-TODOLIST": {
             return state.filter(t => t.id !== action.id)
@@ -66,10 +72,13 @@ export const todolistReducer = (state: Array<TodolistType>, action: ActionType):
             return state.map(t => t.id === action.id ? {...t, title: action.title} : {...t})
         }
         case "ADD-TODOLIST":{
-            return [...state,{id:action.id, title:action.title, filter:"all"}]
+            return [{id:action.id, title:action.title, filter:"all"},...state]
         }
         case "CHANGE-FILTER":{
             return state.map(t=>t.id===action.id?{...t,filter:action.filter}:{...t})
+        }
+        default:{
+            return state
         }
     }
 }
