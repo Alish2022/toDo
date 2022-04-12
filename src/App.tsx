@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/task-reducer";
 import {AppRootStateType} from "./state/store";
 import {addTodolistAC, changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/todolist-reducer";
+import {Todolist1} from "./Todolist1";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -73,7 +74,7 @@ function App() {
         return (
             <Grid key={tl.id} item>
                 <Paper style={{padding:"20px"}} elevation={10}>
-                    <Todolist
+                    <Todolist1
                         key={tl.id}
                         id={tl.id}
                         title={tl.title}
