@@ -3,11 +3,15 @@ import {TasksStateType} from "../App";
 import {taskReducer} from "./task-reducer";
 import {addTodolistAC, removeTodolistAC} from "./todolist-reducer";
 
-test('add-todolist-task',()=>{
-    let todolistId1=v1()
-    let todolistId2=v1()
+let todolistId1=v1()
+let todolistId2=v1()
+let tasks:TasksStateType
 
-    let tasks:TasksStateType={
+beforeEach(()=>{
+    todolistId1=v1()
+    todolistId2=v1()
+
+    tasks={
         [todolistId1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true}
@@ -17,6 +21,9 @@ test('add-todolist-task',()=>{
             {id: v1(), title: "React Book", isDone: true}
         ]
     };
+})
+
+test('add-todolist-task',()=>{
     let newTitle="newTitle"
 
     const endState=taskReducer(tasks,addTodolistAC(newTitle))
