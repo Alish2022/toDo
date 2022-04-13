@@ -102,7 +102,7 @@ export const taskReducer = (state: TasksStateType=initialState, action: ActionTy
                     state[action.todolistId].map
                     (t => t.id === action.taskId ?
                         {...t, title: action.title} :
-                        {...t})
+                        t)
             }
         }
         case "REMOVE-TODOLIST": {
