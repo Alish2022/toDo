@@ -93,7 +93,7 @@ export const taskReducer = (state: TasksStateType=initialState, action: ActionTy
                     state[action.todolistId].map
                     (t => t.id === action.taskId ?
                         {...t, isDone: action.isDone} :
-                        {...t})
+                        t)
             }
         }
         case "CHANGE-TASK-TITLE": {

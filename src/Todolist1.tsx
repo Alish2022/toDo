@@ -6,8 +6,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {Button, Checkbox, collapseClasses, IconButton, List, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-import {addTaskAC} from "./state/task-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/task-reducer";
 import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/todolist-reducer";
+import {Task} from "./Task";
+import StatusButtons from "./StatusButtons";
+
+
 
 export type TaskType = {
     id: string
@@ -17,16 +21,6 @@ export type TaskType = {
 
 type PropsType = {
     id: string
-    title: string
-    tasks: Array<TaskType>
-    removeTask: (taskId: string, todolistId: string) => void
-    changeFilter: (value: FilterValuesType, todolistId: string) => void
-    addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
-    removeTodolist: (id: string) => void
-    changeTodolistTitle: (id: string, newTitle: string) => void
-    filter: FilterValuesType
-    changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
 }
 
 export function Todolist1(props: PropsType) {
@@ -57,12 +51,9 @@ export function Todolist1(props: PropsType) {
         dispatch(changeTodolistTitleAC(props.id,title))
     }
 
-    const onAllClickHandler = () => dispatch(changeFilterAC( props.id,"all"))
-    const onActiveClickHandler = () => dispatch(changeFilterAC( props.id,"active"))
-    const onCompletedClickHandler = () => dispatch(changeFilterAC( props.id,"completed"))
-
     return <div>
-        <h3 style={{textAlign: "center"}}><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
+        <h3 style={{textAlign: "center"}}>
+            <EditableSpan value={todolist.title} onChange={changeTodolistTitle}/>
             <IconButton onClick={removeTodolist} aria-label="delete">
                 <DeleteIcon/>
             </IconButton>
@@ -70,34 +61,10 @@ export function Todolist1(props: PropsType) {
         <AddItemForm addItem={addTask}/>
         <List>
             {
-                tasks.map(t => {
-                    const onClickHandler = () => props.removeTask(t.id, props.id)
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        let newIsDoneValue = e.currentTarget.checked;
-                        props.changeTaskStatus(t.id, newIsDoneValue, props.id);
-                    }
-                    const onTitleChangeHandler = (newValue: string) => {
-                        props.changeTaskTitle(t.id, newValue, props.id);
-                    }
-
-
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <Checkbox onChange={onChangeHandler} checked={t.isDone}/>
-                        <EditableSpan value={t.title} onChange={onTitleChangeHandler}/>
-                        <IconButton onClick={onClickHandler} aria-label="delete">
-                            <DeleteIcon/>
-                        </IconButton>
-                    </li>
-                })
+                tasks.map(t => <Task key={t.id} taskId={t.id} todolistId={props.id} title={t.title} isDone={t.isDone} />)
             }
         </List>
-        <div style={{display: "flex", justifyContent: "space-between"}}>
-            <Button onClick={onAllClickHandler} variant={props.filter === 'all' ? "contained" : "outlined"}>All</Button>
-            <Button onClick={onActiveClickHandler}
-                    variant={props.filter === 'active' ? "contained" : "outlined"}>Active</Button>
-            <Button onClick={onCompletedClickHandler}
-                    variant={props.filter === 'completed' ? "contained" : "outlined"}>Completed</Button>
-        </div>
+        <StatusButtons todolistId={props.id} filter={todolist.filter}/>
     </div>
 }
 
