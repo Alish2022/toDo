@@ -25,10 +25,10 @@ const Tasks = React.memo((props: propsType) => {
         <>
             {
                 tasks.map(t =>
-                <>
-                <ChexBoxContainer todolistId={props.id} isDone={t.isDone} taskId={t.id}/>
-                <Task key={t.id} taskId={t.id} todolistId={props.id} title={t.title} isDone={t.isDone}/>
-                </>)
+                    <li key={t.id} className={t.isDone ? "is-done" : ""}>
+                        <ChexBoxContainer todolistId={props.id} isDone={t.isDone} taskId={t.id}/>
+                        <Task key={t.id} taskId={t.id} todolistId={props.id} title={t.title} isDone={t.isDone}/>
+                    </li>)
             }
         </>
     )

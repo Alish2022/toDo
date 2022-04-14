@@ -51,7 +51,6 @@ export const EditableSpan=React.memo((props: EditableSpanPropsType)=>{
                        helperText={error && "Field is requered"}
                        onKeyPress={onKeyPressHandler}
             />
-            {/*<input value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>*/}
         </>
 
         : <span onDoubleClick={activateEditMode}>{props.value}</span>

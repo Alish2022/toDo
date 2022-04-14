@@ -5,25 +5,23 @@ import {EditableSpan} from "./EditableSpan";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useDispatch} from "react-redux";
 
-type propsType={
+type propsType = {
     taskId: string
     todolistId: string
-    isDone:boolean
-    title:string
+    isDone: boolean
+    title: string
 }
 
-export const Task=React.memo((props:propsType)=>{
+export const Task = React.memo((props: propsType) => {
     console.log('task')
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
     function removeTask(id: string, todolistId: string) {
-        dispatch(removeTaskAC(todolistId,id))
+        dispatch(removeTaskAC(todolistId, id))
     }
 
-
-
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        dispatch(changeTaskTitleAC(todolistId,id,newTitle))
+        dispatch(changeTaskTitleAC(todolistId, id, newTitle))
     }
 
     const onClickHandler = () => removeTask(props.taskId, props.todolistId)
@@ -32,11 +30,13 @@ export const Task=React.memo((props:propsType)=>{
         changeTaskTitle(props.taskId, newValue, props.todolistId);
     }
 
-    return <li key={props.taskId} className={props.isDone ? "is-done" : ""}>
+    return (
+        <> <EditableSpan value={props.title} onChange={onTitleChangeHandler}/>
+            <IconButton onClick={onClickHandler} aria-label="delete">
+                <DeleteIcon/>
+            </IconButton>
+        </>
 
-        <EditableSpan value={props.title} onChange={onTitleChangeHandler}/>
-        <IconButton onClick={onClickHandler} aria-label="delete">
-            <DeleteIcon/>
-        </IconButton>
-    </li>
+
+    )
 })

@@ -9,7 +9,8 @@ type propsType={
     isDone:boolean
 }
 
-const ChexBoxContainer = (props:propsType) => {
+const ChexBoxContainer = React.memo((props:propsType) => {
+    console.log('check-box')
     const dispatch=useDispatch()
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +20,6 @@ const ChexBoxContainer = (props:propsType) => {
     return (
             <Checkbox onChange={onChangeHandler} checked={props.isDone}/>
     );
-};
+});
 
 export default ChexBoxContainer;
