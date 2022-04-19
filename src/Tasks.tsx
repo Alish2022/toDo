@@ -1,16 +1,16 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import {Task} from "./Task";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TaskType} from "./Todolist1";
 import {FilterValuesType} from "./App";
-import ChexBoxContainer from "./ChexBoxContainer";
 
 type propsType = {
     id: string
 }
 
 const Tasks = React.memo((props: propsType) => {
+
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.id])
     let todolistFilter = useSelector<AppRootStateType, FilterValuesType>(state => state.todolists.filter(t => t.id === props.id)[0].filter)
     //Фильтрация tasks
@@ -24,11 +24,13 @@ const Tasks = React.memo((props: propsType) => {
     return (
         <>
             {
-                tasks.map(t =>
-                    <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <ChexBoxContainer todolistId={props.id} isDone={t.isDone} taskId={t.id}/>
-                        <Task key={t.id} taskId={t.id} todolistId={props.id} title={t.title} isDone={t.isDone}/>
-                    </li>)
+                tasks.map(t => {
+                        return (
+                            <li key={t.id} className={t.isDone ? "is-done" : ""}>
+                                <Task key={t.id} taskId={t.id} todolistId={props.id} title={t.title} isDone={t.isDone}/>
+                            </li>)
+                    }
+                )
             }
         </>
     )
