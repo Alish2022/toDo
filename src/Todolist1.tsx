@@ -30,9 +30,9 @@ export const Todolist1 = React.memo((props: PropsType) => {
         dispatch(addTaskAC(props.id, title))
     }, [props.id, dispatch])
 
-    const removeTodolist = () => {
+    const removeTodolist =useCallback( () => {
         dispatch(removeTodolistAC(props.id))
-    }
+    },[props.id,dispatch])
 
     return <div>
         <h3 style={{textAlign: "center"}}>

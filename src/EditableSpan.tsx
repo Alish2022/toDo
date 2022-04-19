@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import {TextField} from "@mui/material";
 
 type EditableSpanPropsType = {
@@ -12,17 +12,17 @@ export const EditableSpan=React.memo((props: EditableSpanPropsType)=>{
     let [title, setTitle] = useState(props.value);
     let [error,setError]=useState(false)
 
-    const activateEditMode = () => {
+    const activateEditMode = useCallback( () => {
         setEditMode(true);
         setTitle(props.value);
-    }
-    const activateViewMode = () => {
+    },[])
+    const activateViewMode = useCallback(() => {
         if(!error){
             setEditMode(false);
             props.onChange(title.trim());
         }
-    }
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    },[])
+    const changeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         if(e.currentTarget.value.trim()===""){
             setError(true)
         } else{
@@ -30,13 +30,13 @@ export const EditableSpan=React.memo((props: EditableSpanPropsType)=>{
         }
         setTitle(e.currentTarget.value)
 
-    }
+    },[])
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyPressHandler =useCallback( (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             activateViewMode();
         }
-    }
+    },[])
 
     return editMode
         ?

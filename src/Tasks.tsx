@@ -27,7 +27,7 @@ const Tasks = React.memo((props: propsType) => {
                 tasks.map(t => {
                         return (
                             <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                                <Task key={t.id} taskId={t.id} todolistId={props.id} title={t.title} isDone={t.isDone}/>
+                                <Task taskId={t.id} todolistId={props.id} title={t.title} isDone={t.isDone}/>
                             </li>)
                     }
                 )
